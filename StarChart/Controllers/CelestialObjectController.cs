@@ -19,7 +19,7 @@ namespace StarChart.Controllers
         {
             _context = context;
         }
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}", Name ="GetById")]
         public IActionResult GetById(int id)
         {
             try
@@ -44,7 +44,7 @@ namespace StarChart.Controllers
             }
         }
 
-        [HttpGet("{name:string}")]
+        [HttpGet("{name}")]
         public IActionResult GetByName(string name)
         {
             try
