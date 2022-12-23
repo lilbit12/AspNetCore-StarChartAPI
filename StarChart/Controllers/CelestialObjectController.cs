@@ -99,17 +99,11 @@ namespace StarChart.Controllers
         {
             try
             {
-                var existing = _context.CelestialObjects.FirstOrDefault(e => e.Id == celestialObject.Id);
-                if (existing != null)
-                {
-                    _context.CelestialObjects.Add(existing);
+
+                    _context.CelestialObjects.Add(celestialObject);
                     _context.SaveChanges();
-                    return CreatedAtRoute("GetById", new { id = existing.Id }, celestialObject);
-                }
-                else
-                {
-                    return BadRequest();
-                }
+                    return CreatedAtRoute("GetById", new { id = celestialObject.Id }, celestialObject);
+
             }
             catch (Exception)
             {
