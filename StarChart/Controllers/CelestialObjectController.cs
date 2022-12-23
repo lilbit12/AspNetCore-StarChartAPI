@@ -104,7 +104,7 @@ namespace StarChart.Controllers
                 {
                     _context.CelestialObjects.Add(existing);
                     _context.SaveChanges();
-                    return CreatedAtRoute("GetById", new { id = existing.Id });
+                    return CreatedAtRoute("GetById", new { id = existing.Id }, celestialObject);
                 }
                 else
                 {
