@@ -104,7 +104,7 @@ namespace StarChart.Controllers
                 {
                     _context.CelestialObjects.Add(existing);
                     _context.SaveChanges();
-                    return CreatedAtRoute("GetById", new CelestialObject { Id = existing.Id });
+                    return CreatedAtRoute("GetById", new { id = existing.Id });
                 }
                 else
                 {
@@ -127,6 +127,33 @@ namespace StarChart.Controllers
                 {
                     existing.Name = name;
                     _context.Update(existing);
+                    _context.SaveChanges();
+                    return NoContent();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, CelestialObject celestialObject)
+        {
+            try
+            {
+                var existing = _context.CelestialObjects.FirstOrDefault(e => e.Id == id);
+                if (existing != null)
+                {
+                    existing.Name = celestialObject.Name;
+                    existing.OrbitalPeriod = celestialObject.OrbitalPeriod;
+                    existing.OrbitedObjectId = celestialObject.OrbitedObjectId;
+
+                    _context.CelestialObjects.Update(existing);
                     _context.SaveChanges();
                     return NoContent();
                 }
