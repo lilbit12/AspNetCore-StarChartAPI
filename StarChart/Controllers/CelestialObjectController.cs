@@ -94,5 +94,76 @@ namespace StarChart.Controllers
                 throw;
             }
         }
+        [HttpPost]
+        public IActionResult Create([FromBody] CelestialObject celestialObject)
+        {
+            try
+            {
+                var existing = _context.CelestialObjects.FirstOrDefault(e => e.Id == celestialObject.Id);
+                if (existing != null)
+                {
+                    _context.CelestialObjects.Add(existing);
+                    _context.SaveChanges();
+                    return CreatedAtRoute("GetById", new CelestialObject { Id = existing.Id });
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPatch("{id}/{name}")]
+        public IActionResult RenameObject(int id, string name)
+        {
+            try
+            {
+                var existing = _context.CelestialObjects.FirstOrDefault(e => e.Id == id);
+                if (existing != null)
+                {
+                    existing.Name = name;
+                    _context.Update(existing);
+                    _context.SaveChanges();
+                    return NoContent();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                var existing = _context.CelestialObjects.FirstOrDefault(e => e.Id == id);
+                if (existing != null)
+                {
+                    _context.CelestialObjects.RemoveRange(existing);
+                    _context.SaveChanges();
+                    return NoContent();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
